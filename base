@@ -1,0 +1,26 @@
+;; total-points consumes the number of total questions, total-qs,
+;;   and multiplies it by two to produce the total number of
+;;   available marks or points
+
+(define (total-points total-qs)
+         (* 2 total-qs))
+
+
+;; points-left comsumes total-qs and the number of correct
+;;  questions. Produces the total points left that are either
+;;  due to unanswered questions or inccorectly answered questions.
+
+(define (points-left total-qs correct)
+ (* 2 (- (*  0.75 (total-points total-qs))
+     (* (min (* 0.75 total-qs) correct)))))
+
+
+;; cs135-participation calculates the final participation
+;;   grade for a student after the best 75% of their mark is taken
+
+(define (cs135-participation total-qs correct incorrect)
+(* 100
+ (/ (+
+     (- (* .75 (total-points total-qs)) (points-left total-qs correct))
+     (min incorrect (/ (points-left total-qs correct) 2)))
+ (* .75 (total-points total-qs)))))
